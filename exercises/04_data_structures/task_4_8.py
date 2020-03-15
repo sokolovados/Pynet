@@ -19,3 +19,13 @@
 '''
 
 ip = '192.168.3.1'
+ip = ip.split('.')
+ip_0= int(ip[0])
+ip_1= int(ip[1])
+ip_2= int(ip[2])
+ip_3= int(ip[3])
+
+output = '''
+{0:<10} {1:<10} {2:<10} {3:<10}
+{0:>010b} {1:>010b} {2:>010b} {3:>010b}'''             
+print(output.format(ip_0,ip_1,ip_2,ip_3))
