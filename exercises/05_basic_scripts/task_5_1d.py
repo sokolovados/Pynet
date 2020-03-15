@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 5.1d
@@ -43,3 +44,14 @@ london_co = {
         'routing': True
     }
 }
+
+device = input('введите имя устройства: ')
+device_key = ','.join(list(london_co[device].keys()))
+
+prop = input('введте имя параметра ('+device_key + '): ' )
+prop = prop.lower()
+print((london_co[device].get(prop,'такого параметра нет')))
+
+
+
+

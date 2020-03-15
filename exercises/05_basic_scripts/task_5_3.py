@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 5.3
@@ -55,3 +56,15 @@ trunk_template = [
     'switchport trunk encapsulation dot1q', 'switchport mode trunk',
     'switchport trunk allowed vlan {}'
 ]
+port_type = input('Введите режим работы интерфейса(access/trunk): ')
+interface = input('Введите тип и номер интерфейса: ')
+vlans = input('Введите номер влан(ов): ')
+
+dictmode = {'trunk':trunk_template,'access':access_template}
+mode  = dictmode[port_type]
+
+print('interface ' + interface + '\n' +('\n'.join(mode)).format(vlans))
+
+
+
+

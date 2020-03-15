@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
 '''
 Задание 5.2
 
@@ -19,3 +21,33 @@ Mask:
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+network = input('Введите ip-сеть в формате x.x.x.x/x: ')
+template = '''
+Network:
+{0:<8} {1:<8} {2:<8} {3:<8}
+{0:08b} {1:08b} {2:08b} {3:08b}
+
+Mask:
+{4}
+{5:<8} {6:<8} {7:<8} {8:<8}
+{5:08b} {6:08b} {7:08b} {8:08b}
+'''
+mask = network.split('/')[1]
+net = (network.split('/')[0]).split('.')
+binmask = '1'*int(mask)+'0'*(32-int(mask))
+binmask = [int(binmask[:8],2),int(binmask[8:16],2),int(binmask[16:24],2),int(binmask[24:32],2)]
+
+
+print(template.format(int(net[0]),int(net[1]),int(net[2]),int(net[3]),('/'+mask),int(binmask[0]),int(binmask[1]),int(binmask[2]),int(binmask[3])))
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 5.1a
@@ -44,3 +45,12 @@ london_co = {
         'routing': True
     }
 }
+device = input('введите имя устройства: ')
+prop = input('введите имя параметра: ')
+print(london_co[device][prop])
+
+
+
+
+
+
