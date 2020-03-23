@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 11.1
@@ -27,4 +28,17 @@ R6           Fa 0/2          143           R S I           2811       Fa 0/0
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+def  parse_cdp_neighbors(command_output):
+    
+    
+    device_name = (command_output.split('>')[0]).strip('\n')
+    command_list_in = (command_output.split('\n'))
+    command_list = [element for element in command_list_in if element and len(element.split())  >7  and (element.split()[3]).isdigit()]
+    command_list = [i.split() for i in command_list]
+    result_dict = {(device_name,local_inf+local_inf2):(remote_dev,remote_inf+remote_inf2) for remote_dev,local_inf,local_inf2,*_,remote_inf,remote_inf2  in command_list}
+    return(result_dict)
+
+#f = (open('sh_cdp_n_r2.txt')).read()
+#print(parse_cdp_neighbors(f))
+
 

@@ -21,4 +21,23 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+def get_int_vlan_map(config_filename):
+    dict_of_access = {}
+    dict_of_trunk = {}
+    result_list = []
+    with open(config_filename,'r') as config:
+        for string in config:
+            if 'interface' in string:
+                interface = (string.split())[1]
+            elif 'access vlan' in string:
+                access_vlan  = int(string.split()[3])
+                dict_of_access[interface] = access_vlan
+            elif 'allowed vlan' in string:
+                trunk_vlan = (string.split()[4]).split(',')
+                trunk_vlan = [int(vlan) for vlan in trunk_vlan]
+                dict_of_trunk[interface]= trunk_vlan
+    result_list = [dict_of_access,dict_of_trunk]
+    return(tuple(result_list))
+
+
 

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 11.2
@@ -40,4 +41,26 @@ Cгенерировать топологию, которая соответст�
 > pip install graphviz
 
 '''
+from pprint import pprint
+from draw_network_graph import draw_topology
+from task_11_1 import parse_cdp_neighbors
+file_list = []
+result_dict2 = {}
+def create_network_map(filenames):
+    result_dict_key = []
+    for files in filenames:
+        file =(open(files)).read()
+        file_list.append(file)
+        list_of_dict = [parse_cdp_neighbors(element) for element in file_list]
+    result_dict = {key:value for list_of_dict_element in list_of_dict for key,value in list_of_dict_element.items()}
+    for key in list(result_dict):
+        for value in list(result_dict.values()):
+            if key == value:
+                del result_dict[key]
+    return(result_dict)
+
+draw_topology(create_network_map(['sh_cdp_n_r1.txt','sh_cdp_n_sw1.txt','sh_cdp_n_r2.txt','sh_cdp_n_r3.txt']))
+
+#pprint(create_network_map(['sh_cdp_n_r1.txt','sh_cdp_n_sw1.txt','sh_cdp_n_r2.txt','sh_cdp_n_r3.txt']))
+
 

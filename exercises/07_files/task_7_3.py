@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 7.3
@@ -15,5 +16,16 @@
  300    0a1b.5c80.7000   Gi0/7
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
-
 '''
+template = '{0:<8}  {1} {2:>8}'
+
+with open('CAM_table.txt','r') as mac_table:
+    for string in mac_table:
+        if 'DYNAMIC' in string:
+            string = string.split()
+            print(template.format(string[0],string[1],string[3]))
+
+
+
+        else:
+            continue

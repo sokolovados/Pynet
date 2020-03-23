@@ -33,7 +33,6 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
-
 trunk_mode_template = [
     'switchport mode trunk', 'switchport trunk native vlan 999',
     'switchport trunk allowed vlan'
@@ -44,4 +43,16 @@ trunk_config = {
     'FastEthernet0/2': [11, 30],
     'FastEthernet0/4': [17]
 }
+def generate_trunk_config(intf_vlan_mapping,trunk_template):
+    list_of_trunk_config  = []
+    for interface,vlan in intf_vlan_mapping.items():
+
+        list_of_trunk_config.append(f'interface {interface}')
+        for command in trunk_template:
+            vlan = [str(vid) for vid in vlan]
+            if 'trunk allowed' in command:
+                list_of_trunk_config.append(f'{command} {",".join(vlan)}')
+            else:
+                list_of_trunk_config.append(command)
+    return(list_of_trunk_config)
 

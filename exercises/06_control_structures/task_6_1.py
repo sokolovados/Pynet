@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 6.1
@@ -10,6 +11,10 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
-
+mac_cisco = []
 mac = ['aabb:cc80:7000', 'aabb:dd80:7340', 'aabb:ee80:7000', 'aabb:ff80:7000']
+for macaddress in mac:
+    mac_cisco.append(macaddress.replace(':','.'))
+
+print(mac_cisco)
 

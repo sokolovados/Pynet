@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
 '''
 Задание 6.3
 
@@ -55,3 +57,20 @@ for intf, vlan in access.items():
             print(' {} {}'.format(command, vlan))
         else:
             print(' {}'.format(command))
+
+for key in trunk.keys():
+    print(f'Interface {key}')
+    vlans = ','.join((trunk[key])[1:])
+    action = ''.join((trunk[key])[0])
+    
+    for command in trunk_template:
+        if 'allowed vlan' in command:
+            if 'only' in action:
+                print(f'{command} {vlans}')
+            elif 'add' in action:
+                print(f'{command} add {vlans}')
+            elif 'del' in action:
+                print(f'{command} remove {vlans}')
+        else:
+            print(f'{command}' )
+

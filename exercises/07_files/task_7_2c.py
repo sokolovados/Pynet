@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 7.2c
@@ -17,3 +18,19 @@
 '''
 
 ignore = ['duplex', 'alias', 'Current configuration']
+
+from sys import argv
+
+config = argv[1]
+resultfile = argv[2]
+with open(config,'r') as config,open(resultfile,'w') as result:
+    for string in config:
+        if string.startswith('!'):
+            continue
+        else:
+            for match in ignore:
+                if match in string:
+                    break
+            else:
+                result.write(string)
+
