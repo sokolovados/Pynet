@@ -1,0 +1,26 @@
+show switch
+Command: show switch
+
+Device Type        : DES-1228/ME Metro Ethernet Switch
+MAC Address        : B8-A3-86-FA-6E-60
+IP Address         : 192.168.88.229 (DHCP)
+VLAN Name          : Control
+Subnet Mask        : 255.255.255.0
+Default Gateway    : 192.168.88.2
+Boot PROM Version  : Build 2.00.R001
+Firmware Version   : Build 2.63.B006
+Hardware Version   : B1
+Serial Number      : PVCM3C2000508
+System Name        : burnakovka-1.6
+System Location    : Burnakovskaja55p2
+System Uptime      : 0 days, 2 hours, 10 minutes, 14 seconds
+System Contact     : 
+Spanning Tree      : Enabled
+GVRP               : Disabled
+IGMP Snooping      : Disabled
+VLAN Trunk         : Disabled
+802.1X             : Enabled
+Telnet             : Enabled (TCP 23)
+Web                : Enabled (TCP 80)
+RMON               : Disabled
+ [7mCTRL+C[0m [7mESC[0m [7mq[0m Quit [7mSPACE[0m [7mn[0m Next Page [7mENTER[0m Next Entry [7ma[0m All 

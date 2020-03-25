@@ -23,3 +23,14 @@ Reachable    Unreachable
 
 Для этого задания нет тестов
 '''
+
+from tabulate import tabulate
+
+
+def print_ip_table(Reachable,Unreachable):
+    reach = {'reachable': [value for value in Reachable]}
+    unreach = {'unrachable': [value for value in Unreachable]}
+    reach.update(unreach)
+    print(tabulate(reach, headers ='keys'))
+print_ip_table([1,2,3],[4,5,6])
+
