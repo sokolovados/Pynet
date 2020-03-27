@@ -27,3 +27,16 @@
 '''
 
 headers = ['interface', 'address', 'status', 'protocol']
+from task_15_2 import parse_sh_ip_int_br
+import re
+def convert_to_dict(keys, temp_list):
+    result_list = []
+    for num,environment in enumerate(temp_list):
+        print(environment)
+        result_list.append({key:value for key,value in zip(headers,environment) })
+
+    #print(result_list)
+    return(result_list)
+    #convert_to_dict(headers,parse_sh_ip_int_br('sh_ip_int_br.txt'))
+
+

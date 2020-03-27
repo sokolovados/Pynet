@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 15.4
@@ -22,4 +23,31 @@ interface Loopback0
 
 Проверить работу функции на примере файла config_r1.txt.
 '''
+import re
 
+def get_ints_without_description(filename):
+    regex= 'interface +(?P<interface>\S+\d+\/?\d*\S*)|(?P<descr> description.+)'
+    resultlist = []
+    interface = ''
+    with open(filename,'r') as file:
+        for string in file:
+            match = re.search(regex,string)
+            if match:
+                if match.lastgroup == 'interface':
+                    if interface:
+                        resultlist.append(interface)
+                        interface = match.group(match.lastgroup)
+                    else:
+                        interface = match.group(match.lastgroup)
+                elif match.lastgroup == 'descr':
+                    interface = ''
+                    continue
+            else:
+                continue
+        else:
+            if interface:
+                resultlist.append(interface)
+
+    return(resultlist)
+
+print(get_ints_without_description('config_r1.txt'))

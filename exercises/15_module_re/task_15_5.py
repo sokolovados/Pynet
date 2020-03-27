@@ -24,3 +24,21 @@ description Connected to SW1 port Eth 0/1
 
 Проверить работу функции на файле sh_cdp_n_sw1.txt.
 '''
+import re
+def generate_description_from_cdp(filename):
+    template = 'description Connected to {} port {}'
+    intf_description_dict = {}
+    regex = re.compile(r'^(?P<device>\S+) +'
+             r'(?P<loc_intf>\S+ \d+\/?\d*).+'
+             r'(?P<rem_intf>\S{3} \d+\/?\d*)')
+    
+    with open(filename,'r') as cdp_neighbors:
+        for string in cdp_neighbors:
+            #print(string)
+            match = regex.search(string)
+            if match:
+               intf_description_dict[match.group('loc_intf')] = template.format(match.group('device'),match.group('rem_intf')) 
+
+
+    return(intf_description_dict)
+print(generate_description_from_cdp('sh_cdp_n_sw1.txt'))

@@ -26,3 +26,27 @@ Ethernet0/1 соответствует список из двух кортеже
 
 '''
 
+import re
+def get_ip_from_cfg(filename):
+    resultdict = {}
+    ipgrouplist = []
+    interface = ''
+    ipgroup = re.compile(r'ip address ((?:\d+\.)+\d+) +((?:\d+\.)+\d+)')
+    intfgroup = re.compile(r'interface (\S+)')
+    with open(filename, 'r') as filestr:
+        for string in filestr:
+
+            if intfgroup.search(string):
+                if interface and ipgrouplist:
+                    resultdict[interface] = ipgrouplist
+                    ipgrouplist = []
+                    interface = intfgroup.search(string).group(1)
+                else:
+                    interface = intfgroup.search(string).group(1)
+            elif ipgroup.findall(string):
+                ipgrouplist.append(ipgroup.findall(string)[0])
+    return(resultdict)
+
+print(get_ip_from_cfg('config_r2.txt'))
+
+
