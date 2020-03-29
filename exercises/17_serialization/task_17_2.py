@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 17.2
@@ -24,3 +25,25 @@ R6           Fa 0/2          143           R S I           2811       Fa 0/0
 
 Проверить работу функции на содержимом файла sh_cdp_n_sw1.txt
 '''
+import re
+
+
+def parse_sh_cdp_neighbors(sh_cdp_neigh):
+    result_dict = {}
+    cur_dev = ''
+    regex = re.compile('^(?P<cur_dev>\w*\d*)>sh'
+                       '|(?P<rem_dev>\S+) +(?P<cur_intf>\S+ \d+\/?\d*).+ (?P<rem_intf>\S{2,5} \d+\/?\d*)$')
+    for string in (sh_cdp_neigh.split('\n')):
+        match = regex.search(string)
+        if match:
+            if match.lastgroup == ('cur_dev'):
+                cur_dev = match.group('cur_dev')
+                result_dict[cur_dev] = {}
+            else:
+                result_dict[cur_dev][match.group('cur_intf')] = {}
+                result_dict[cur_dev][match.group('cur_intf')].update({match.group('rem_dev'):match.group('rem_intf')})
+    return(result_dict)
+if __name__=='__main__':
+    with open('sh_cdp_n_sw1.txt','r') as file:
+        cdp_neigh = file.read()
+        print(parse_sh_cdp_neighbors(cdp_neigh))

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 17.2a
@@ -32,3 +33,27 @@
 Проверить работу параметра save_to_filename и записать итоговый словарь в файл topology.yaml.
 
 '''
+import re
+from pprint import pprint
+from task_17_2 import parse_sh_cdp_neighbors
+import yaml
+
+def generate_topology_from_cdp(list_of_files,save_to_filename=None):
+    '''
+    генерирует словарь связей cdp из нескольких файлов
+    При передаче второго аргумента - записывает в yaml файл
+    '''
+    multi_out_cdp = {}
+    for cdp_neigh in list_of_files:
+        cdp_neigh = open(cdp_neigh,'r').read()
+        multi_out_cdp.update(parse_sh_cdp_neighbors(cdp_neigh))
+    if save_to_filename:
+        with open(save_to_filename,'w') as out_yaml_file:
+            yaml.dump(multi_out_cdp,out_yaml_file)
+
+    return(multi_out_cdp)
+    
+
+if __name__ == '__main__':
+    list_of_file =['sh_cdp_n_sw1.txt','sh_cdp_n_r1.txt','sh_cdp_n_r2.txt','sh_cdp_n_r3.txt','sh_cdp_n_r4.txt','sh_cdp_n_r5.txt','sh_cdp_n_r6.txt']
+    pprint(generate_topology_from_cdp(list_of_file,'topology.yaml'))

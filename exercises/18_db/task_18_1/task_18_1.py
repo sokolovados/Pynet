@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
 '''
 Задание 18.1
 

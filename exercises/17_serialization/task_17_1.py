@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
 '''
 Задание 17.1
 
@@ -38,10 +40,49 @@
 
 Кроме того, создан список заголовков (headers), который должен быть записан в CSV.
 '''
-
+import csv
 import glob
-
+import os
+import re
 sh_version_files = glob.glob('sh_vers*')
 #print(sh_version_files)
 
 headers = ['hostname', 'ios', 'image', 'uptime']
+
+def parse_sh_version(sh_ver_file):
+    '''Функция parse_sh_version:
+    * возвращает кортеж из трёх элементов:
+     * ios - в формате "12.4(5)T"
+     * image - в формате "flash:c2800-advipservicesk9-mz.124-5.T.bin"
+     * uptime - в формате "5 days, 3 hours, 3 minutes"
+    '''
+    regex = (r'Cisco IOS Software, \S+ \S+ \S+, Version (?P<ios>\d+\.?\S+),.+'
+         r'router uptime is (?P<uptime>(?:\d+ \S+,? ?)+).+'
+         r'System image file is \"(?P<image>\S+)\".+')
+    match = re.findall(regex,sh_ver_file,re.DOTALL)[0]
+    match = tuple([match[0],match[2],match[1]])
+    return(match)
+
+
+def write_inventory_to_csv(data_filenames,csv_filename):
+    '''Функция write_inventory_to_csv должна делать следующее:
+    * обработать информацию из каждого файла с выводом sh version:
+     * sh_version_r1.txt, sh_version_r2.txt, sh_version_r3.txt
+    * с помощью функции parse_sh_version, из каждого вывода должна быть получена информация ios, image, uptime
+    * из имени файла нужно получить имя хоста
+    * после этого вся информация должна быть записана в CSV файл'''
+        
+    with open(csv_filename,'a') as routers_inventory:
+        csv_write = csv.writer(routers_inventory)
+        csv_write.writerow(headers)
+        for sh_ver_file in data_filenames:
+            with open(sh_ver_file,'r') as sh_ver_str:
+                device_name = sh_ver_file.strip('.txt').split('_')[-1] #имя девайса
+                parsing = list(parse_sh_version(sh_ver_str.read())) # список из файла
+                parsing.insert(0,device_name) # формирование нового списка для добавления в csv
+                csv_write.writerow(parsing)
+                
+if __name__ == '__main__':
+    write_inventory_to_csv(['sh_version_r1.txt','sh_version_r2.txt','sh_version_r3.txt'],'routers_inventory.csv')
+
+

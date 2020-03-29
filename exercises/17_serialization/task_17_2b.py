@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 17.2b
@@ -31,3 +32,27 @@
 > pip install graphviz
 
 '''
+from task_17_2a import generate_topology_from_cdp
+import re
+import yaml
+from pprint import pprint
+from draw_network_graph import draw_topology
+def transform_topology(topology_file):
+    new_dict = {}
+    with open(topology_file) as topology_file:
+        topology = yaml.safe_load(topology_file)
+    for key in topology.keys():
+        for key_val in topology[key].keys():
+            for rem_dev,rem_intf in topology[key][key_val].items():
+                new_dict.update({(key,key_val):(rem_dev,rem_intf)})
+    for key in list(new_dict.keys()):
+        for value in list(new_dict.values()):
+            if key == value :
+                del new_dict[key]
+
+    return(new_dict)
+
+if __name__=='__main__':
+    pprint(transform_topology('topology.yaml'))
+    draw_topology(transform_topology('topology.yaml'))
+
