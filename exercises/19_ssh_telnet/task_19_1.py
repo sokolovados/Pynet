@@ -1,3 +1,4 @@
+#!/home/vagrant/venv/pyneng-py3-7/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 19.1
@@ -15,5 +16,20 @@
 Скрипт должен отправлять команду command на все устройства из файла devices.yaml с помощью функции send_show_command.
 
 '''
+import getpass
+from netmiko import ConnectHandler
+import time
+import sys
+import yaml
 
-command = 'sh ip int br'
+command =  'sh ip int br\n'
+
+with open('devices.yaml') as devices :
+    templates = yaml.safe_load(devices)
+    for devices in templates:
+        print('Connection to device {}'.format(devices['ip']))
+        with ConnectHandler(**devices) as ssh:
+            ssh.enable()
+
+            result = ssh.send_command(command)
+            print(result)

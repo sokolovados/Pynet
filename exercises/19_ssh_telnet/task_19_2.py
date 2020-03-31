@@ -1,3 +1,4 @@
+#!/home/vagrant/venv/pyneng-py3-7/bin/python3
 # -*- coding: utf-8 -*-
 '''
 Задание 19.2
@@ -44,3 +45,30 @@ R1#
 commands = [
     'logging 10.255.255.1', 'logging buffered 20010', 'no logging console'
 ]
+import getpass
+from netmiko import ConnectHandler
+from netmiko.ssh_exception import *
+import sys
+import yaml
+
+
+
+    
+    
+def send_config_commands(device, config_commands):
+    try:
+        print('Connect to {}'.format(device['ip']))
+        with ConnectHandler(**device) as ssh:
+            ssh.enable()
+            result = ssh.send_config_set(config_commands)
+            print(result)
+    except (AuthenticationException,NetMikoTimeoutException,SSHException) as error:
+        print(error)
+        
+with open ('devices.yaml','r') as file:
+    file = yaml.safe_load(file)
+for diction in file:
+    send_config_commands(diction,commands)
+    
+        
+        
